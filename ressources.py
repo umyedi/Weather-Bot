@@ -6,7 +6,6 @@ import random
 
 # Ressources
 CUR_DIR = os.path.dirname(os.path.abspath(__file__))
-PATH = CUR_DIR + '\WeatherBotData.txt'
 
 # Authentification for Tweepy
 def AuthTweepy():

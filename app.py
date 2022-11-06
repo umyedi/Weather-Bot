@@ -11,10 +11,10 @@ def allWeatherInfos(city):
     date = datetime.now().strftime("%d/%m/%Y")
     time = datetime.now().strftime("%Hh%M")
     weather = location.weather.detailed_status
-    temperature = location.weather.temperature('celsius')
-    wind_speed = location.weather.wind()
-    wind_speed = round(wind_speed['speed']*3.6, 2)
-    return [city, date, time, weather, int(temperature['temp']), int(temperature['feels_like']), wind_speed]
+    temp = location.weather.temperature('celsius')
+    wind_speed = location.weather.wind().get('speed', 0)
+    wind_speed = round(wind_speed*3.6, 2)
+    return [city, date, time, weather, int(round(temp['temp'])), int(round(temp['feels_like'])), wind_speed]
 
 def updateProfilPicture(weather):
     directory = CUR_DIR + '\\profil_pictures\\'
@@ -31,11 +31,11 @@ def updateProfilPicture(weather):
             return False
     return True
 
-def publishTweet(weather_infos): # Input : ['Paris', '05/11/2022', 'couvert', 11.97, 11.26, 14.83]
+def publishTweet(weather_infos):
     tweet = f"""
-    Voici la météo pour {weather_infos[0]}, le {weather_infos[1]} à {weather_infos[2]}:\n
-        ☀️ Temps : {weather_infos[3]}\n
-        🌡️ Température moyenne : {weather_infos[4]}°C (ressenti {weather_infos[5]}°C)\n
+    Voici la météo pour {weather_infos[0]}, le {weather_infos[1]} à {weather_infos[2]}:
+        ☀️ Temps : {weather_infos[3]}
+        🌡️ Température moyenne : {weather_infos[4]}°C (ressenti {weather_infos[5]}°C)
         💨 Vitesse du vent : {weather_infos[6]} km/h"""
 
     AuthTweepy().update_status(tweet)
@@ -53,12 +53,14 @@ def autoRun(schedules):
     city = input("Entrez une ville : ")
 
     while True:
+
         current_time = datetime.now().strftime("%Hh%M")
+        all_weather_infos = allWeatherInfos(city)
+
         for i in schedules:
 
             if i == current_time:
-                city = input("Entrez une ville : ")
-                all_weather_infos = allWeatherInfos(city)
+
                 publishTweet(all_weather_infos)
                 updateProfilPicture(all_weather_infos[3])
 
@@ -66,4 +68,4 @@ def autoRun(schedules):
 
         time.sleep(60)
 
-manualRun()
+autoRun(['09h00', '09h05', '09h10'])
