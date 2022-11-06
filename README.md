@@ -9,11 +9,11 @@ Nous sommes une **équipe de trois lycéens** ayant un **projet d'école** à su
 Nous avons donc choisis de créer un **bot twitter** qui **publie la météo** d'une ville spécifique.
 Le bot peut également **changer sa photo de profil selon la météo**.
 
-Voici le compte du bot : [@HDedeux](https://twitter.com/HDedeux))
+Voici le compte du bot : [@HDedeux](https://twitter.com/HDedeux)
 
 ## C'est quoi le but ?
 
-WeatherBotTwitter est un **bot codé entièrement en python** qui permet de **poster des tweets** annonçant la **météo** de n'importe quelle ville. On peut également programmer un **emploi du temps** où chaque jour, un tweet se postera aux heures prédéfinies.
+Weather Bot est un **bot codé entièrement en python** qui permet de **poster des tweets** annonçant la **météo** de n'importe quelle ville. On peut également programmer un **emploi du temps** où chaque jour, un tweet se postera aux heures prédéfinies.
 
 ---
 
@@ -25,7 +25,7 @@ Pour traiter les données de Twitter, c'est le module [**Tweepy**](https://www.t
     
     pip install tweepy
 
-Il est également nécessaire de posséder les tokens de Tweepy. Pour cela, il faut se rendre sur l'[espace développeur](https://developer.twitter.com/en/portal/petition/essential/basic-info) de twitter et créer une « application » pour récupérer les tokens nécessaires et les ajouter dans le fichier [ressources.py](https://github.com/Timoleroux/Weather-Bot/blob/main/ressources.py).
+Il est également nécessaire de posséder les tokens de Tweepy. Pour cela, il faut se rendre sur l'[espace développeur](https://developer.twitter.com/en/portal/petition/essential/basic-info) de twitter et créer un projet pour récupérer les tokens nécessaires et les ajouter dans le fichier [ressources.py](https://github.com/Timoleroux/Weather-Bot/blob/main/ressources.py).
 
 Pour traiter les données météorologiques, c'est le module [**Pyowm**](https://pypi.org/project/pyowm/) qui s'en charge. Pour y avoir accès, il faut installer le module en exécutant  la commande :
 
@@ -33,7 +33,7 @@ Pour traiter les données météorologiques, c'est le module [**Pyowm**](https:/
 
 Il est également nécessaire de posséder le token de Pyowm. Pour cela, il faut se créer un compte sur [OWN](https://home.openweathermap.org/users/sign_up) puis, une fois connecté, se rendre [ici](https://home.openweathermap.org/api_keys) où vous trouverez le token nécessaire que vous pourrez ajouter au fichier [ressources.py](https://github.com/Timoleroux/Weather-Bot/blob/main/ressources.py). </br>
 **Attention :** nous ne connaissons pas l'emplacement des stations météo grâce auxquelles cette API va chercher les informations. Par conséquent, il est probable qu'il y ait des légères différences avec les données fournies par des sites de météo officiels.</br>
-Si les différences de données sont trop importantes, il est possible que la ville que vous avez entrée ait été confondue avec un autre endroit portant le même nom (Ex : la ville de Brest existe en France et en Biélorussie).
+Si les différences de données sont trop importantes, il est possible que la ville que vous avez entrée ait été confondue avec un autre endroit portant le même nom *(Ex : la ville de Brest existe en France et en Biélorussie)*.
 
 ---
 ## Documentation des fonctions
@@ -42,15 +42,15 @@ Si les différences de données sont trop importantes, il est possible que la vi
 
     AuthTweepy()
 
-Cette fonction permet d'**authentifier la connexion à Tweepy** et donc d'utiliser cette API. Voir la [doc officielle]().
+Cette fonction permet d'**authentifier la connexion à Tweepy** et donc d'utiliser cette API. Voir la [documentation](https://docs.tweepy.org/en/stable/).
 
 ### ressources.py/AuthPyowm
 
     AuthPyowm()
 
-Cette fonction permet d'**authentifier la connexion à Pyowm** et donc d'utiliser cette API. 
+Cette fonction permet d'**authentifier la connexion à Pyowm** et donc d'utiliser cette API. Voir la [documentation](https://pyowm.readthedocs.io/en/latest/).
 
-### main.py/allWeatherInfos
+### app.py/allWeatherInfos
 
     allWeatherInfos()
     Input : 'Paris'
@@ -66,7 +66,7 @@ Grâce à Pyowm, elle retourne une liste contenant les informations suivantes :
 6. Le **ressenti** de cette température *(int)*
 7. La **vitesse du vent** dans cette ville *(float)*
 
-### main.py/updateProfilPicture
+### app.py/updateProfilPicture
 
     updateProfilPicture()
     Input : 'nuageux'
@@ -76,7 +76,7 @@ Cette fonction prend en entrée le 4<sup>ème</sup> élément de la liste préc�
 Si l'entrée fait partie des cas cités dans la fonction, alors elle change la photo de profil du bot et retourne `True`. </br>
 Si l'entrée ne fait pas partie des cas cités dans la fonction, alors elle affiche dans la console « Aucune photo de profil correspond à {météo} pour le moment. » et retourne `False`.
 
-### main.py/publishTweet
+### app.py/publishTweet
 
     publishTweet()
     Input : ['Paris', '05/11/2022', '19h00', 'nuageux', 10, 9, 16.67]
@@ -88,7 +88,7 @@ Si l'entrée ne fait pas partie des cas cités dans la fonction, alors elle affi
 Cette fonction prend en entrée la liste de données que retourne la fonction [`allWeatherInfos()`](#mainpyallweatherinfos). </br>
 Elle publie un tweet grâce à la liste qui lui a été donnée et si l'opération réussi, elle retourne `True`.
 
-### main.py/manualRun
+### app.py/manualRun
 
     manualRun()
     Input : None
@@ -98,7 +98,7 @@ Cette fonction ne prend rien en entrée. </br>
 Elle demande à l'utilisateur de choisir une ville puis publie le Tweet correspondant et change la photo de profil selon la météo grâce à la fonctions [`updateProfilPicture()`](#mainpyupdateprofilpicture). </br>
 Si l'opération réussit elle retourne `True`.
 
-### main.py/autoRun
+### app.py/autoRun
 
     autoRun()
     Input : ['08h00', '12h00', '20h30']
@@ -126,4 +126,4 @@ La plupart du temps, cette erreur est causée car le nom de la ville n'est pas v
           ^
     SyntaxError: invalid syntax
 
-Si vous obtenez cette erreur, c'est parce que vous avez exécuté ce script avec une version inférieure à la [version 3.10 de Python]().
+Si vous obtenez cette erreur, c'est parce que vous avez exécuté ce script avec une version inférieure à la [version 3.10 de Python](https://www.python.org/downloads/).

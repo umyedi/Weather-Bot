@@ -44,8 +44,10 @@ def publishTweet(weather_infos):
 def manualRun():
     city = input("Entrez une ville : ")
     all_weather_infos = allWeatherInfos(city)
+    print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Tweet en cours de publication...')
     publishTweet(all_weather_infos)
     updateProfilPicture(all_weather_infos[3])
+    print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Tweet publié !')
     return True
 
 def autoRun(schedules):
@@ -61,10 +63,11 @@ def autoRun(schedules):
 
             if i == current_time:
 
+                print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Tweet en cours de publication...')
                 publishTweet(all_weather_infos)
                 updateProfilPicture(all_weather_infos[3])
 
-                print(f'Tweet publié le {datetime.now().strftime("%d/%m/%Y à %H:%M:%S")}')
+                print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Tweet publié !')
 
         time.sleep(60)
 
