@@ -24,10 +24,18 @@ def updateProfilPicture(weather):
             AuthTweepy().update_profile_image(directory + 'ciel_degage.png')
         case 'couvert':
             AuthTweepy().update_profile_image(directory + 'couvert.png')
+        case 'peu nuageux':
+            AuthTweepy().update_profile_image(directory + 'couvert.png')
+        case 'partiellement nuageux':
+            AuthTweepy().update_profile_image(directory + 'couvert.png')
         case 'nuageux':
             AuthTweepy().update_profile_image(directory + 'nuageux.png')
+        case 'pluie modérée':
+            AuthTweepy().update_profile_image(directory + 'pluie.png')
+        case 'brume':
+            AuthTweepy().update_profile_image(directory + 'pluie.png')
         case _:
-            print(f"Aucune photo de profile correspond à {weather} pour le moment.")
+            print(f"Aucune photo de profile correspond à '{weather}' pour le moment.")
             return False
     return True
 
@@ -70,5 +78,3 @@ def autoRun(schedules):
                 print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Tweet publié !')
 
         time.sleep(60)
-
-autoRun(['09h00', '09h05', '09h10'])
