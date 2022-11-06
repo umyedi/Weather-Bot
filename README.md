@@ -126,4 +126,4 @@ La plupart du temps, cette erreur est causée car le nom de la ville n'est pas v
           ^
     SyntaxError: invalid syntax
 
-Si vous obtenez cette erreur, c'est parce que vous avez exécuté ce script avec une version inférieure à la [version 3.10 de Python](https://www.python.org/downloads/).
+Si vous obtenez cette erreur, c'est parce que vous avez exécuté ce script avec une version inférieure à la la **version 3.10** de [**Python**](https://www.python.org/downloads/).
