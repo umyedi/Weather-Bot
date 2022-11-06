@@ -1,4 +1,4 @@
-# WeatherBotTwitter
+# Weather Bot
 
 ---
 
@@ -19,7 +19,7 @@ Weather Bot est un **bot codé entièrement en python** qui permet de **poster d
 
 ## Prérequis pour lancer le script
 
-<span style="color:#e8cb58">**Attention :** *le script doit être exécuté avec la [**version 3.10 de Python**](https://www.python.org/downloads/) au minimum.*</span>
+**Attention :** *le script doit être exécuté avec la **version 3.10** de [**Python**](https://www.python.org/downloads/) au minimum.*</span>
 
 Pour traiter les données de Twitter, c'est le module [**Tweepy**](https://www.tweepy.org/) qui s'en charge. Pour y avoir accès, il faut installer le module en exécutant la commande :
     
@@ -31,7 +31,7 @@ Pour traiter les données météorologiques, c'est le module [**Pyowm**](https:/
 
     pip install pyowm
 
-Il est également nécessaire de posséder le token de Pyowm. Pour cela, il faut se créer un compte sur [OWN](https://home.openweathermap.org/users/sign_up) puis, une fois connecté, se rendre [ici](https://home.openweathermap.org/api_keys) où vous trouverez le token nécessaire que vous pourrez ajouter au fichier [ressources.py](https://github.com/Timoleroux/Weather-Bot/blob/main/ressources.py). </br>
+Il est également nécessaire de posséder le token de Pyowm. Pour cela, il faut se créer un compte sur [OWM](https://home.openweathermap.org/users/sign_up) puis, une fois connecté, se rendre [ici](https://home.openweathermap.org/api_keys) où vous trouverez le token nécessaire que vous pourrez ajouter au fichier [ressources.py](https://github.com/Timoleroux/Weather-Bot/blob/main/ressources.py). </br>
 **Attention :** nous ne connaissons pas l'emplacement des stations météo grâce auxquelles cette API va chercher les informations. Par conséquent, il est probable qu'il y ait des légères différences avec les données fournies par des sites de météo officiels.</br>
 Si les différences de données sont trop importantes, il est possible que la ville que vous avez entrée ait été confondue avec un autre endroit portant le même nom *(Ex : la ville de Brest existe en France et en Biélorussie)*.
 
@@ -86,7 +86,7 @@ Si l'entrée ne fait pas partie des cas cités dans la fonction, alors elle affi
                 💨 Vitesse du vent : 16.67 km/h
 
 Cette fonction prend en entrée la liste de données que retourne la fonction [`allWeatherInfos()`](#mainpyallweatherinfos). </br>
-Elle publie un tweet grâce à la liste qui lui a été donnée et si l'opération réussi, elle retourne `True`.
+Elle publie un tweet grâce à la liste qui lui a été donnée et si l'opération réussit, elle retourne `True`.
 
 ### app.py/manualRun
 
@@ -104,7 +104,7 @@ Si l'opération réussit elle retourne `True`.
     Input : ['08h00', '12h00', '20h30']
     Output : None
 
-Cette fonction prend en entrée une liste contenant des horaires sous la forme de string. </br>
+Cette fonction prend en entrée une liste contenant des horaires sous la forme de **string**. </br>
 Elle demande à l'utilisateur de choisir une ville.
 Grâce aux fonctions précédentes, pour chacun des horaires de la liste, elle publie ensuite le tweet contenant la météo correspondant à la ville choisie et elle affiche la date de publication du tweet dans la console d'exécution. </br>
 Elle ne retourne rien.
