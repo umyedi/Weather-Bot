@@ -2,10 +2,15 @@ from pyowm import *
 from pyowm.utils.config import get_default_config
 import tweepy
 import os
+import pathlib
 import random
+from datetime import datetime
 
 # Ressources
 CUR_DIR = os.path.dirname(os.path.abspath(__file__))
+
+def currentTime(format):
+   return datetime.now().strftime(format)
 
 # Authentification for Tweepy
 def AuthTweepy():

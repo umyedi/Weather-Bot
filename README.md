@@ -50,6 +50,22 @@ Cette fonction permet d'**authentifier la connexion à Tweepy** et donc d'utilis
 
 Cette fonction permet d'**authentifier la connexion à Pyowm** et donc d'utiliser cette API. Voir la [documentation](https://pyowm.readthedocs.io/en/latest/).
 
+### ressources.py/currentTime
+
+    currentTime()
+    Input : '%d/%m/%Y %H:%M:%S'
+    Output : 05/11/2022 19:00:00
+
+Cette fonction prend en entrée une string qui définit le format de l'heure qui sera retournée en sortie de la forme choisie.
+| Commande |  Français  |  Anglais  |
+|:--------:|:----------:|:---------:|
+|   `%Y`   |    Année   |   Year    |
+|   `%m`   |    Mois    |   Month   |
+|   `%d`   |    Jour    |   Day     |
+|   `%H`   |    Heure   |   Hour    |
+|   `%M`   |    Minute  |   Minute  |
+|   `%S`   |    Seconde |   Second  |
+
 ### app.py/allWeatherInfos
 
     allWeatherInfos()
@@ -88,6 +104,16 @@ Si l'entrée ne fait pas partie des cas cités dans la fonction, alors elle affi
 Cette fonction prend en entrée la liste de données que retourne la fonction [`allWeatherInfos()`](#mainpyallweatherinfos). </br>
 Elle publie un tweet grâce à la liste qui lui a été donnée et si l'opération réussit, elle retourne `True`.
 
+### app.py/writeInLog
+
+    writeInLog()
+    Input : 'Ceci est un message enregistré dans LOG.txt'
+    Output : 'Ceci est un message enregistré dans LOG.txt'
+
+Cette fonction prend en entrée une string qui sera enregistré dans le fichier LOG.txt.
+Si le fichier LOG.txt n'éxiste pas, la fonction le crée.
+Elle retourne le même message d'entrée.
+
 ### app.py/manualRun
 
     manualRun()
@@ -96,6 +122,7 @@ Elle publie un tweet grâce à la liste qui lui a été donnée et si l'opérati
 
 Cette fonction ne prend rien en entrée. </br>
 Elle demande à l'utilisateur de choisir une ville puis publie le Tweet correspondant et change la photo de profil selon la météo grâce à la fonctions [`updateProfilPicture()`](#mainpyupdateprofilpicture). </br>
+Elle affiches le statut tu Tweet (en cours de publication, publié) dans la console et l'enregistre dans le ficher LOG.txt</br>
 Si l'opération réussit elle retourne `True`.
 
 ### app.py/autoRun
@@ -107,23 +134,29 @@ Si l'opération réussit elle retourne `True`.
 Cette fonction prend en entrée une liste contenant des horaires sous la forme de **string**. </br>
 Elle demande à l'utilisateur de choisir une ville.
 Grâce aux fonctions précédentes, pour chacun des horaires de la liste, elle publie ensuite le tweet contenant la météo correspondant à la ville choisie et elle affiche la date de publication du tweet dans la console d'exécution. </br>
+Elle affiches le statut tu Tweet (en cours de publication, publié) dans la console et l'enregistre dans le ficher LOG.txt</br>
 Elle ne retourne rien.
 
 ---
 ## Documentation des erreurs communes
 
+La plupart du temps, l'erreur suivante est causée par les tokens écrits dans [ressources.py](https://github.com/Timoleroux/Weather-Bot/blob/main/ressources.py) qui sont incorrects.
+
+    tweepy.errors.Forbidden: 403 Forbidden
+    187 - Status is a duplicate.
+
+Si vous obtenez l'erreur suivante, c'est que le Tweet que vous essayez de publier existe déjà.
+
     tweepy.errors.Unauthorized: 401 Unauthorized
     32 - Could not authenticate you.
 
-La plupart du temps, cette erreur est causée car les tokens écrits dans [ressources.py](https://github.com/Timoleroux/Weather-Bot/blob/main/ressources.py) sont incorrects.
+La plupart du temps, l'erreur suivante est causée car le nom de la ville n'est pas valide.
 
     pyowm.commons.exceptions.NotFoundError: Unable to find the resource
 
-La plupart du temps, cette erreur est causée car le nom de la ville n'est pas valide.
+Si vous obtenez l'erreur suivante, c'est parce que vous avez exécuté ce script avec une version inférieure à la la **version 3.10** de [**Python**](https://www.python.org/downloads/).
 
     File "consoleApp.py", line 21
     match weather:
           ^
     SyntaxError: invalid syntax
-
-Si vous obtenez cette erreur, c'est parce que vous avez exécuté ce script avec une version inférieure à la la **version 3.10** de [**Python**](https://www.python.org/downloads/).

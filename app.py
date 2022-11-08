@@ -1,15 +1,17 @@
-from ressources import AuthTweepy, AuthPyown, CUR_DIR
+from ressources import AuthTweepy, AuthPyown, currentTime, CUR_DIR
 from pyowm import *
 from datetime import datetime
 import time
+import pathlib
+import os
 
 def allWeatherInfos(city):
     owm = AuthPyown()
     mgr = owm.weather_manager()
     location = mgr.weather_at_place(city)
 
-    date = datetime.now().strftime("%d/%m/%Y")
-    time = datetime.now().strftime("%Hh%M")
+    date = currentTime("%d/%m/%Y")
+    time = currentTime("%Hh%M")
     weather = location.weather.detailed_status
     temp = location.weather.temperature('celsius')
     wind_speed = location.weather.wind().get('speed', 0)
@@ -49,32 +51,39 @@ def publishTweet(weather_infos):
     AuthTweepy().update_status(tweet)
     return tweet
 
+def writeInLog(content):
+
+    file_path = CUR_DIR + "\\LOG.txt"
+    with open(file_path, "a", encoding="utf-8") as f:
+        f.write("\n" + content)
+    return content
+
 def manualRun():
     city = input("Entrez une ville : ")
     all_weather_infos = allWeatherInfos(city)
-    print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Tweet en cours de publication...')
+
+    print(writeInLog(f"[{currentTime('%d/%m/%Y %H:%M:%S')}] Tweet en cours de publication..."))
     publishTweet(all_weather_infos)
     updateProfilPicture(all_weather_infos[3])
-    print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Tweet publié !')
+    print(writeInLog(f"[{currentTime('%d/%m/%Y %H:%M:%S')}] Tweet publié !"))
     return True
 
 def autoRun(schedules):
 
     city = input("Entrez une ville : ")
+    print(writeInLog(f"[{currentTime('%d/%m/%Y %H:%M:%S')}] Lancement du script automatique pour {city}. Horaires : {schedules}"))
 
     while True:
 
-        current_time = datetime.now().strftime("%Hh%M")
         all_weather_infos = allWeatherInfos(city)
 
-        for i in schedules:
+        if currentTime('%Hh%M') in schedules:
 
-            if i == current_time:
+            print(writeInLog(f"[{currentTime('%d/%m/%Y %H:%M:%S')}] Tweet en cours de publication..."))
 
-                print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Tweet en cours de publication...')
-                publishTweet(all_weather_infos)
-                updateProfilPicture(all_weather_infos[3])
+            publishTweet(all_weather_infos)
+            updateProfilPicture(all_weather_infos[3])
 
-                print(f'[{datetime.now().strftime("%d/%m/%Y %H:%M:%S")}] Tweet publié !')
+            print(writeInLog(f"[{currentTime('%d/%m/%Y %H:%M:%S')}] Tweet publié !"))
 
         time.sleep(60)
