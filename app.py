@@ -2,9 +2,8 @@ from ressources import AuthTweepy, AuthPyown, currentTime, CUR_DIR
 from pyowm import *
 from datetime import datetime
 import time
-import pathlib
-import os
 
+# https://github.com/Timoleroux/Weather-Bot#apppyallweatherinfos
 def allWeatherInfos(city):
     owm = AuthPyown()
     mgr = owm.weather_manager()
@@ -18,6 +17,7 @@ def allWeatherInfos(city):
     wind_speed = round(wind_speed*3.6, 2)
     return [city, date, time, weather, int(round(temp['temp'])), int(round(temp['feels_like'])), wind_speed]
 
+# https://github.com/Timoleroux/Weather-Bot#apppyupdateprofilpicture
 def updateProfilPicture(weather):
     directory = CUR_DIR + '\\profil_pictures\\'
 
@@ -41,6 +41,7 @@ def updateProfilPicture(weather):
             return False
     return True
 
+# https://github.com/Timoleroux/Weather-Bot#apppypublishtweet
 def publishTweet(weather_infos):
     tweet = f"""
     Voici la météo pour {weather_infos[0]}, le {weather_infos[1]} à {weather_infos[2]}:
@@ -51,6 +52,7 @@ def publishTweet(weather_infos):
     AuthTweepy().update_status(tweet)
     return tweet
 
+# https://github.com/Timoleroux/Weather-Bot#apppywriteinlog
 def writeInLog(content):
 
     file_path = CUR_DIR + "\\LOG.txt"
@@ -58,6 +60,7 @@ def writeInLog(content):
         f.write("\n" + content)
     return content
 
+# https://github.com/Timoleroux/Weather-Bot#apppymanualrun
 def manualRun():
     city = input("Entrez une ville : ")
     all_weather_infos = allWeatherInfos(city)
@@ -68,6 +71,7 @@ def manualRun():
     print(writeInLog(f"[{currentTime('%d/%m/%Y %H:%M:%S')}] Tweet publié !"))
     return True
 
+# https://github.com/Timoleroux/Weather-Bot#apppyautorun
 def autoRun(schedules):
 
     city = input("Entrez une ville : ")
