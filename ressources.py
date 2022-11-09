@@ -26,5 +26,5 @@ def AuthTweepy():
 # https://github.com/Timoleroux/Weather-Bot#ressourcespyauthpyowm
 def AuthPyown():
    config_dict = get_default_config()
-   config_dict['language'] = 'fr'
-   return OWM('ca34703d746615ba513984e5155d27a7', config_dict)
+   config_dict["language"] = "fr"
+   return OWM("Token", config_dict)

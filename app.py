@@ -1,6 +1,5 @@
 from ressources import AuthTweepy, AuthPyown, currentTime, CUR_DIR
 from pyowm import *
-from datetime import datetime
 import time
 
 # https://github.com/Timoleroux/Weather-Bot#apppyallweatherinfos
