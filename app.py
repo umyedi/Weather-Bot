@@ -4,12 +4,14 @@ import tweepy
 from pyowm.owm import OWM
 import time
 import logging
+import sys
 
 # Configuration du format des messages de log
 logging.basicConfig(level=logging.INFO,
-                    filename='app.log',
-                    encoding='utf-8',
-                    filemode='a',
+                    handlers=[
+                        logging.FileHandler(filename='app.log', mode='a', encoding='UTF-8'),
+                        logging.StreamHandler(sys.stdout),
+                    ],
                     format='[%(asctime)s] %(levelname)s -> %(message)s',
                     datefmt='%d-%m-%Y %H:%M:%S')
 logger = logging.getLogger()
