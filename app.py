@@ -112,5 +112,3 @@ def autoRun(schedules):
             logging.info(f"Tweet publié !")
 
         time.sleep(60)
-
-autoRun(['21h20', '21h25', '21h30'])
