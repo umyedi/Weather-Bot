@@ -39,7 +39,6 @@ def updateProfilPicture(weather):
             AuthTweepy().update_profile_image(directory + 'orageux.png')
         case _:
             print(writeInLog(f"[{currentTime('%d/%m/%Y %H:%M:%S')}] Aucune photo de profile correspond à '{weather}' pour le moment."))
-            print()
             return False
     return True
 
