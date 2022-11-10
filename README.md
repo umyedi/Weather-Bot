@@ -20,6 +20,7 @@ Weather Bot est un **bot codé entièrement en python** qui permet de **poster d
 ## Prérequis pour lancer le script
 
 **Attention :** *le script doit être exécuté avec la **version 3.10** de [**Python**](https://www.python.org/downloads/) au minimum.*</span>
+Pour télécharger le .zip, cliquez [ici](https://github.com/Timoleroux/Weather-Bot/archive/refs/heads/main.zip)
 
 Pour traiter les données de Twitter, c'est le module [**Tweepy**](https://www.tweepy.org/) qui s'en charge. Pour y avoir accès, il faut installer le module en exécutant la commande :
     
