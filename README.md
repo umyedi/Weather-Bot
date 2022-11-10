@@ -104,16 +104,6 @@ Si l'entrée ne fait pas partie des cas cités dans la fonction, alors elle affi
 Cette fonction prend en entrée la liste de données que retourne la fonction [`allWeatherInfos()`](#mainpyallweatherinfos). </br>
 Elle publie un tweet grâce à la liste qui lui a été donnée et si l'opération réussit, elle retourne `True`.
 
-### app.py/writeInLog
-
-    writeInLog()
-    Input : 'Ceci est un message enregistré dans LOG.txt'
-    Output : 'Ceci est un message enregistré dans LOG.txt'
-
-Cette fonction prend en entrée une string qui sera enregistré dans le fichier LOG.txt.
-Si le fichier LOG.txt n'éxiste pas, la fonction le crée.
-Elle retourne le même message d'entrée.
-
 ### app.py/manualRun
 
     manualRun()
@@ -142,21 +132,18 @@ Elle ne retourne rien.
 
 La plupart du temps, l'erreur suivante est causée par les tokens écrits dans [ressources.py](https://github.com/Timoleroux/Weather-Bot/blob/main/ressources.py) qui sont incorrects.
 
-    tweepy.errors.Forbidden: 403 Forbidden
-    187 - Status is a duplicate.
+    tweepy.errors.Unauthorized: 401 Unauthorized
+    32 - Could not authenticate you.
 
 Si vous obtenez l'erreur suivante, c'est que le Tweet que vous essayez de publier existe déjà.
 
-    tweepy.errors.Unauthorized: 401 Unauthorized
-    32 - Could not authenticate you.
+    tweepy.errors.Forbidden: 403 Forbidden
+    187 - Status is a duplicate.
 
 La plupart du temps, l'erreur suivante est causée car le nom de la ville n'est pas valide.
 
     pyowm.commons.exceptions.NotFoundError: Unable to find the resource
 
-Si vous obtenez l'erreur suivante, c'est parce que vous avez exécuté ce script avec une version inférieure à la la **version 3.10** de [**Python**](https://www.python.org/downloads/).
+En général, ce genre d'erreur est due à un programme externe (du type antivirus) qui bloque les connexions avec les modules.
 
-    File "consoleApp.py", line 21
-    match weather:
-          ^
-    SyntaxError: invalid syntax
+    pyowm.commons.exceptions.InvalidSSLCertificateError:
