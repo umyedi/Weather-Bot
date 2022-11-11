@@ -67,7 +67,7 @@ Cette fonction prend en entrée une string qui définit le format de l'heure qui
 |   `%M`   |    Minute  |   Minute  |
 |   `%S`   |    Seconde |   Second  |
 
-### app.py/allWeatherInfos
+### main.py/allWeatherInfos
 
     allWeatherInfos()
     Input : 'Paris'
@@ -83,7 +83,7 @@ Grâce à Pyowm, elle retourne une liste contenant les informations suivantes :
 6. Le **ressenti** de cette température *(int)*
 7. La **vitesse du vent** dans cette ville *(float)*
 
-### app.py/updateProfilPicture
+### main.py/updateProfilPicture
 
     updateProfilPicture()
     Input : 'nuageux'
@@ -93,7 +93,7 @@ Cette fonction prend en entrée le 4<sup>ème</sup> élément de la liste préc�
 Si l'entrée fait partie des cas cités dans la fonction, alors elle change la photo de profil du bot et retourne `True`. </br>
 Si l'entrée ne fait pas partie des cas cités dans la fonction, alors elle affiche dans la console « Aucune photo de profil correspond à {météo} pour le moment. » et retourne `False`.
 
-### app.py/publishTweet
+### main.py/publishTweet
 
     publishTweet()
     Input : ['Paris', '05/11/2022', '19h00', 'nuageux', 10, 9, 16.67]
@@ -105,7 +105,7 @@ Si l'entrée ne fait pas partie des cas cités dans la fonction, alors elle affi
 Cette fonction prend en entrée la liste de données que retourne la fonction [`allWeatherInfos()`](#mainpyallweatherinfos). </br>
 Elle publie un tweet grâce à la liste qui lui a été donnée et si l'opération réussit, elle retourne `True`.
 
-### app.py/manualRun
+### main.py/manualRun
 
     manualRun()
     Input : None
@@ -116,7 +116,7 @@ Elle demande à l'utilisateur de choisir une ville puis publie le Tweet correspo
 Elle affiches le statut tu Tweet (en cours de publication, publié) dans la console et l'enregistre dans le ficher LOG.txt</br>
 Si l'opération réussit elle retourne `True`.
 
-### app.py/autoRun
+### main.py/autoRun
 
     autoRun()
     Input : ['08h00', '12h00', '20h30']

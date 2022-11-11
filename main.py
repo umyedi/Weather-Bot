@@ -1,7 +1,6 @@
 from ressources import AuthTweepy, AuthPyown, currentTime, CUR_DIR
 import pyowm
 import tweepy
-from pyowm.owm import OWM
 import time
 import logging
 import sys
@@ -9,7 +8,7 @@ import sys
 # Configuration du format des messages de log
 logging.basicConfig(level=logging.INFO,
                     handlers=[
-                        logging.FileHandler(filename='app.log', mode='a', encoding='UTF-8'),
+                        logging.FileHandler(filename='main.log', mode='a', encoding='UTF-8'),
                         logging.StreamHandler(sys.stdout),
                     ],
                     format='[%(asctime)s] %(levelname)s -> %(message)s',
@@ -33,14 +32,17 @@ def allWeatherInfos(city):
         return [city, date, time, weather, int(round(temp['temp'])), int(round(temp['feels_like'])), wind_speed]
 
     except pyowm.commons.exceptions.NotFoundError as e:
-        logger.error(f"La location pour '{city}' n'est pas valide ({e}).")
-        exit()
+        logger.warning(f"La location pour '{city}' n'est pas valide ({e}).")
+        return False
+    except pyowm.commons.exceptions.APIRequestError as e:
+        logger.warning(f"Veuillez entrez un nom de ville ({e}).")
+        return False
     except pyowm.commons.exceptions.InvalidSSLCertificateError as e:
-        logger.error(f"Un programme externe bloque les connexions ({e}).")
-        exit()
+        logger.warning(f"Un programme externe bloque les connexions ({e}).")
+        return False
     except pyowm.commons.exceptions.UnauthorizedError as e:
-        logger.error(f"Clé d'authentification Pyowm incorrect ({e}).")
-        exit()
+        logger.warning(f"Clé d'authentification Pyowm incorrect ({e}).")
+        return False
 
 
 # https://github.com/Timoleroux/Weather-Bot#apppyupdateprofilpicture
@@ -67,6 +69,7 @@ def updateProfilPicture(weather):
 
 # https://github.com/Timoleroux/Weather-Bot#apppypublishtweet
 def publishTweet(weather_infos):
+
     tweet = f"""
     Voici la météo pour {weather_infos[0]}, le {weather_infos[1]} à {weather_infos[2]}:
         ☀️ Temps : {weather_infos[3]}
@@ -75,30 +78,28 @@ def publishTweet(weather_infos):
 
     try:
         AuthTweepy().update_status(tweet)
+        logger.info("Tweet publié !")
         return tweet
+
     except tweepy.errors.Forbidden as e:
-        logger.error(f"Le Tweet que vous essayez de publier existe déjà ({e}).")
-        exit()
+        logger.warning(f"Le Tweet que vous essayez de publier existe déjà ({e}).")
+        return False
+
     except tweepy.errors.Unauthorized as e:
-        logger.error(f"Clés d'authentification Tweepy incorrects ({e}).")
-        exit()
+        logger.warning(f"Clés d'authentification Tweepy incorrects ({e}).")
+        return False
 
 # https://github.com/Timoleroux/Weather-Bot#apppymanualrun
-def manualRun():
-    city = input("Entrez une ville : ")
+def manualRun(city):
     all_weather_infos = allWeatherInfos(city)
-
-    logger.info("Tweet en cours de publication...")
-    publishTweet(all_weather_infos)
-    updateProfilPicture(all_weather_infos[3])
-    logger.info("Tweet publié !")
-
-    return True
+    if all_weather_infos != False:
+        publishTweet(all_weather_infos)
+        updateProfilPicture(all_weather_infos[3])
+        return True
 
 # https://github.com/Timoleroux/Weather-Bot#apppyautorun
-def autoRun(schedules):
-    city = input("Entrez une ville : ")
-    logging.info(f"Lancement du script automatique pour {city}. Horaires : {schedules}")
+def autoRun(city, schedules):
+    logger.info(f"Lancement du script automatique pour {city}. Horaires : {schedules}")
 
     while True:
 
@@ -106,11 +107,16 @@ def autoRun(schedules):
 
         if currentTime('%Hh%M') in schedules:
 
-            logging.info(f"Tweet en cours de publication...")
+            logger.info(f"Tweet en cours de publication...")
 
-            publishTweet(all_weather_infos)
-            updateProfilPicture(all_weather_infos[3])
+            if all_weather_infos != False:
+                publishTweet(all_weather_infos)
+                updateProfilPicture(all_weather_infos[3])
+                return True
 
-            logging.info(f"Tweet publié !")
+            logger.info(f"Tweet publié !")
 
         time.sleep(60)
+
+if __name__ == '__main__':
+    manualRun('Paris')
