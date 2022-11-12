@@ -57,7 +57,7 @@ def updateProfilPicture(weather):
         AuthTweepy().update_profile_image(directory + 'nuageux.png')
     elif weather == 'pluie modérée':
         AuthTweepy().update_profile_image(directory + 'pluie.png')
-    elif weather == 'brume':
+    elif weather in ['brume', 'brouillard']:
         AuthTweepy().update_profile_image(directory + 'brume.png')
     elif weather == 'orageux':
         AuthTweepy().update_profile_image(directory + 'orageux.png')
@@ -112,7 +112,6 @@ def autoRun(city, schedules):
             if all_weather_infos != False:
                 publishTweet(all_weather_infos)
                 updateProfilPicture(all_weather_infos[3])
-                return True
 
             logger.info(f"Tweet publié !")
 
