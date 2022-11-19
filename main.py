@@ -50,7 +50,7 @@ def updateProfilPicture(weather):
     directory = CUR_DIR + '\\profil_pictures\\'
 
     if weather == 'ciel dégagé':
-        AuthTweepy().update_profile_image(f'{directory}ciel_degage.png')
+        AuthTweepy().update_profile_image(f'{directory}soleil.png')
     elif weather in ['couvert', 'peu nuageux', 'partiellement nuageux']:
         AuthTweepy().update_profile_image(f'{directory}couvert.png')
     elif weather == 'nuageux':

@@ -6,7 +6,7 @@ from functools import partial
 
 """
  Warning : This application is currently in Alpha version which
-means that code isn't optimized and their might have some bugs. 
+means that code isn't optimized and their might have some bugs.
 """
 
 class Worker(QObject):
@@ -31,22 +31,23 @@ class App(QtWidgets.QWidget):
         super().__init__()
 
         # --- Windows settings ---
-        self.setWindowIcon(QtGui.QIcon(CUR_DIR + '\\profil_pictures\\icon.png'))
-        self.setWindowTitle("Weather Bot - Publisher")
-        self.setMinimumSize(QtCore.QSize(300, 200))
+        self.setWindowIcon(QtGui.QIcon(CUR_DIR + '\\profil_pictures\\couvert.png'))
+        self.setWindowTitle("Weather Bot - Publication")
+        self.setMinimumSize(QtCore.QSize(330, 280))
+        self.setMaximumSize(QtCore.QSize(400, 200))
 
         # --- Create components ---
         self.main_layout = QtWidgets.QVBoxLayout(self)
-        self.lbl_city = QtWidgets.QLabel("Choose a city:")
+        self.lbl_city = QtWidgets.QLabel("Choisissez une ville :")
         self.le_city = QtWidgets.QLineEdit(self)
-        self.cbox_use_schedule = QtWidgets.QCheckBox("Publish a Tweet only at the following hours")
-        self.lbl_hour1 = QtWidgets.QLabel("Choose a first schedule (optional):")
+        self.cbox_use_schedule = QtWidgets.QCheckBox("Publier un Tweet seulement pour les horaires suivants")
+        self.lbl_hour1 = QtWidgets.QLabel("Choisissez un horaire (optionnel) :")
         self.le_hour1 = QtWidgets.QLineEdit()
-        self.lbl_hour2 = QtWidgets.QLabel("Choose a second schedule (optional):")
+        self.lbl_hour2 = QtWidgets.QLabel("Choisissez un horaire (optionnel) :")
         self.le_hour2 = QtWidgets.QLineEdit()
-        self.lbl_hour3 = QtWidgets.QLabel("Choose a third schedule (optional):")
+        self.lbl_hour3 = QtWidgets.QLabel("Choisissez un horaire (optionnel) :")
         self.le_hour3 = QtWidgets.QLineEdit()
-        self.btn_run = QtWidgets.QPushButton("Run")
+        self.btn_run = QtWidgets.QPushButton("Exécuter")
 
         # --- Add components to layout ---
         self.main_layout.addWidget(self.lbl_city)
@@ -105,7 +106,7 @@ class App(QtWidgets.QWidget):
             self.thread.start()
 
             # Disable components
-            self.btn_run.setText("Running...")
+            self.btn_run.setText("En cours...")
             self.disableAllComponents()
 
         else:
@@ -118,11 +119,11 @@ class App(QtWidgets.QWidget):
 
             # Change btn_run text and disable btn_run when thread start
             self.btn_run.setEnabled(False)
-            self.btn_run.setText("Running...")
+            self.btn_run.setText("En cours...")
 
             # Change btn_run text and disable btn_run when thread stop
             self.thread.finished.connect(lambda: self.btn_run.setEnabled(True))
-            self.thread.finished.connect(lambda: self.btn_run.setText("Run"))
+            self.thread.finished.connect(lambda: self.btn_run.setText("Exécuter"))
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
