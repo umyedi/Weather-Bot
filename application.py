@@ -4,10 +4,18 @@ from ressources import CUR_DIR
 from main import manualRun, autoRun
 from functools import partial
 
+"""
+ Warning : This application is currently in Alpha version which
+means that code isn't optimized and their might have some bugs. 
+"""
+
 class Worker(QObject):
 
     finished = pyqtSignal()
     progress = pyqtSignal(int)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
     def manualRun_(self, city):
         manualRun(city)
@@ -17,37 +25,15 @@ class Worker(QObject):
         autoRun(city, schedules)
         self.finished.emit()
 
-class LeavingConfirmation(QtWidgets.QDialog):
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-        self.setWindowTitle("Do you really want to leave ?")
-
-        QBtn = QtWidgets.QDialogButtonBox.StandardButton.Yes | QtWidgets.QDialogButtonBox.StandardButton.Cancel
-
-        # --- Create components ---
-        self.btn_box = QtWidgets.QDialogButtonBox(QBtn)
-        self.main_layout = QtWidgets.QVBoxLayout(self)
-        self.message = QtWidgets.QLabel("The application is running. Do you really want to leave ?")
-
-        # --- Add components to layout ---
-        self.main_layout.addWidget(self.message)
-        self.main_layout.addWidget(self.btn_box)
-
-        # --- Set components settings ---
-        self.btn_box.accepted.connect(self.accept)
-        self.btn_box.rejected.connect(self.reject)
-
 class App(QtWidgets.QWidget):
 
     def __init__(self):
         super().__init__()
-        self.setWindowIcon(QtGui.QIcon(CUR_DIR + '\\profil_pictures\\ciel_degage.png'))
-        self.setWindowTitle("Weather Bot - Publisher")
-        self.setupUserInterface()
 
-    def setupUserInterface(self):
+        # --- Windows settings ---
+        self.setWindowIcon(QtGui.QIcon(CUR_DIR + '\\profil_pictures\\icon.png'))
+        self.setWindowTitle("Weather Bot - Publisher")
+        self.setMinimumSize(QtCore.QSize(300, 200))
 
         # --- Create components ---
         self.main_layout = QtWidgets.QVBoxLayout(self)
@@ -104,17 +90,13 @@ class App(QtWidgets.QWidget):
         self.le_hour3.setDisabled(True)
         self.btn_run.setDisabled(True)
 
-    def displayLeavingConfirmation(self):
-        if LeavingConfirmation().exec():
-            win.close()
-
     def run(self):
 
         if self.cbox_use_schedule.isChecked():
 
             city = self.le_city.text()
             schedules = [self.le_hour1.text(),
-                        self.le_hour3.text(),
+                        self.le_hour2.text(),
                         self.le_hour3.text()]
 
             # Start thread for autoRun
@@ -123,7 +105,7 @@ class App(QtWidgets.QWidget):
             self.thread.start()
 
             # Disable components
-            self.btn_run.setText("Stop")
+            self.btn_run.setText("Running...")
             self.disableAllComponents()
 
         else:
