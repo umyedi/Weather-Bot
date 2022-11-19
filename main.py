@@ -110,7 +110,7 @@ def makeSchedulesValid(schedules):
                 sch_hour = schedule[0]
                 sch_min = schedule[1]
 
-                if (sch_hour + sch_min).isdigit() and 0 < int(sch_hour) < 24 and 0 <= int(sch_hour) < 60:
+                if (sch_hour + sch_min).isdigit() and 0 <= int(sch_hour) < 24 and 0 <= int(sch_hour) < 60:
                     valid_schedule = '{0}h{1}'.format(schedule[0].rjust(2, '0'), schedule[1].zfill(2))
                     valid_schedules.append(valid_schedule)
 
@@ -142,5 +142,5 @@ def autoRun(city, schedules):
 
 
 if __name__ == '__main__':
-    # manualRun(input('Entrez une ville'))
-    print(makeSchedulesValid(['8h', '12:30', '25h30']))
+    manualRun(input('Entrez une ville'))
+    # autoRun(input(input('Entrez une ville')), ['7h', '12h', '19h30'])
