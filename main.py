@@ -57,6 +57,8 @@ def updateProfilPicture(weather):
         AuthTweepy().update_profile_image(f'{directory}nuageux.png')
     elif weather == 'pluie modérée':
         AuthTweepy().update_profile_image(f'{directory}pluie.png')
+    elif weather == 'légère pluie':
+        AuthTweepy().update_profile_image(f'{directory}legere_pluie.png')
     elif weather in ['brume', 'brouillard']:
         AuthTweepy().update_profile_image(f'{directory}brume.png')
     elif weather == 'orageux':
