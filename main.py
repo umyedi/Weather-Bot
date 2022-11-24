@@ -137,7 +137,9 @@ def autoRun(city, schedules):
         all_weather_infos = allWeatherInfos(city)
 
         if currentTime('%Hh%M') in valid_schedules and all_weather_infos != False:
-            publishTweet(all_weather_infos)
+            if publishTweet(all_weather_infos) == False:
+                time.sleep(30)
+                publishTweet(all_weather_infos)
             updateProfilPicture(all_weather_infos[3])
 
         time.sleep(60)
