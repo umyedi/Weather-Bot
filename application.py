@@ -1,4 +1,5 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtWidgets import QMessageBox
 from PyQt6.QtCore import QRunnable, QThreadPool
 from ressources import CUR_DIR
 from main import manualRun, autoRun
@@ -68,6 +69,18 @@ class App(QtWidgets.QWidget):
         # --- Set component connexions ---
         self.btn_run.clicked.connect(self.run)
 
+    def disableAllComponents(self):
+        self.lbl_city.setDisabled(True)
+        self.le_city.setDisabled(True)
+        self.cbox_use_schedule.setDisabled(True)
+        self.lbl_hour1.setDisabled(True)
+        self.le_hour1.setDisabled(True)
+        self.lbl_hour2.setDisabled(True)
+        self.le_hour2.setDisabled(True)
+        self.lbl_hour3.setDisabled(True)
+        self.le_hour3.setDisabled(True)
+        self.btn_run.setDisabled(True)
+
     def run(self):
 
         if self.cbox_use_schedule.isChecked():
@@ -85,9 +98,27 @@ class App(QtWidgets.QWidget):
         else:
             city = self.le_city.text()
             runnable = Runnable(1, city)
-        
+
         pool = QThreadPool.globalInstance()
         pool.start(runnable)
+
+    def showLeavingConfirmation(self):
+        dlg = QMessageBox(self)
+        dlg.setWindowTitle("Attention")
+        dlg.setText("Vous être sur le point d'arrêter un processus en cours.\nVoulez vous vraiment quitter ?")
+        dlg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        dlg.setIcon(QMessageBox.Icon.Warning)
+        button = dlg.exec()
+
+        return button == QMessageBox.StandardButton.Yes
+
+    def closeEvent(self, event):
+        if QThreadPool.globalInstance().activeThreadCount() >= 1:
+            if self.showLeavingConfirmation():
+                event.accept()
+                exit()
+            else:
+                event.ignore()
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
