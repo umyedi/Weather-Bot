@@ -1,29 +1,25 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtCore import QObject, QThread, pyqtSignal
+from PyQt6.QtCore import QRunnable, QThreadPool
 from ressources import CUR_DIR
 from main import manualRun, autoRun
-from functools import partial
 
 """
  Warning : This application is currently in Alpha version which
 means that code isn't optimized and their might have some bugs.
 """
 
-class Worker(QObject):
+class Runnable(QRunnable):
+    def __init__(self, n, city, schedules=None):
+        super().__init__()
+        self.n = n
+        self.city = city
+        self.schedules = schedules
 
-    finished = pyqtSignal()
-    progress = pyqtSignal(int)
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-    def manualRun_(self, city):
-        manualRun(city)
-        self.finished.emit()
-
-    def autoRun_(self, city, schedules):
-        autoRun(city, schedules)
-        self.finished.emit()
+    def run(self):
+        if self.n == 1:
+            manualRun(self.city)
+        elif self.n == 2:
+            autoRun(self.city, self.schedules)
 
 class App(QtWidgets.QWidget):
 
@@ -72,25 +68,6 @@ class App(QtWidgets.QWidget):
         # --- Set component connexions ---
         self.btn_run.clicked.connect(self.run)
 
-        # --- Create thread ---
-        self.thread = QThread()
-        self.worker = Worker()
-        self.worker.moveToThread(self.thread)
-        self.worker.finished.connect(self.worker.deleteLater)
-        self.thread.finished.connect(self.thread.deleteLater)
-
-    def disableAllComponents(self):
-        self.lbl_city.setDisabled(True)
-        self.le_city.setDisabled(True)
-        self.cbox_use_schedule.setDisabled(True)
-        self.lbl_hour1.setDisabled(True)
-        self.le_hour1.setDisabled(True)
-        self.lbl_hour2.setDisabled(True)
-        self.le_hour2.setDisabled(True)
-        self.lbl_hour3.setDisabled(True)
-        self.le_hour3.setDisabled(True)
-        self.btn_run.setDisabled(True)
-
     def run(self):
 
         if self.cbox_use_schedule.isChecked():
@@ -100,30 +77,17 @@ class App(QtWidgets.QWidget):
                         self.le_hour2.text(),
                         self.le_hour3.text()]
 
-            # Start thread for autoRun
-            self.thread.started.connect(partial(self.worker.autoRun_, city, schedules))
-            self.worker.finished.connect(self.thread.quit)
-            self.thread.start()
-
-            # Disable components
             self.btn_run.setText("En cours...")
             self.disableAllComponents()
 
+            runnable = Runnable(2, city, schedules)
+
         else:
             city = self.le_city.text()
-
-            # Start thread for manualRun
-            self.thread.started.connect(partial(self.worker.manualRun_, city))
-            self.worker.finished.connect(self.thread.quit)
-            self.thread.start()
-
-            # Change btn_run text and disable btn_run when thread start
-            self.btn_run.setEnabled(False)
-            self.btn_run.setText("En cours...")
-
-            # Change btn_run text and disable btn_run when thread stop
-            self.thread.finished.connect(lambda: self.btn_run.setEnabled(True))
-            self.thread.finished.connect(lambda: self.btn_run.setText("Exécuter"))
+            runnable = Runnable(1, city)
+        
+        pool = QThreadPool.globalInstance()
+        pool.start(runnable)
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
