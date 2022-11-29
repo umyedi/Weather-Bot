@@ -106,7 +106,7 @@ class App(QtWidgets.QWidget):
         self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}uk_flag.png"), "English", lambda: self.setLanguage('EN'))
         self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}france_flag.png"), "Français", lambda: self.setLanguage('FR'))
         self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}spain_flag.png"), "Español", lambda: self.setLanguage('ES'))
-        self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}japan_flag.png"), "やまと", lambda: self.setLanguage('JA'))
+        self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}japan_flag.png"), "日本語", lambda: self.setLanguage('JA'))
 
 
 
