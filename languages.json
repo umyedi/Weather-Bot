@@ -1,0 +1,82 @@
+{
+  "EN": {
+    "win-title": "Weather Bot - Posting ",
+    "city": "Choose a city:",
+    "use-schedule": "Publish a Tweet only for the following hours",
+    "hour": "Choose a schedule (optional):",
+    "run": [
+      "Run",
+      "Running"
+    ],
+    "menubar": [
+      "Language",
+      "Files",
+      "Open log file"
+    ],
+    "dialog": [
+      "Warning!",
+      "You are about to stop a process in progress.\nDo you really want to leave?",
+      "This action requires a restart of the application.\nDo you want to restart?"
+    ]
+  },
+  "FR": {
+    "win-title": "Weather Bot - Publication",
+    "city": "Choisissez une ville :",
+    "use-schedule": "Publier un Tweet seulement pour les horaires suivants",
+    "hour": "Choisissez un horaire (optionnel) :",
+    "run": [
+      "Exécuter",
+      "En cours"
+    ],
+    "menubar": [
+      "Langue",
+      "Fichier",
+      "Ouvrir le fichier de log"
+    ],
+    "dialog": [
+      "Attention !",
+      "Vous être sur le point d'arrêter un processus en cours.\nVoulez vous vraiment quitter ?",
+      "Cette action requière un redémarrage de l'application.\nVoulez-vous redémarrer ?"
+    ]
+  },
+  "ES": {
+    "win-title": "Weather Bot - Publicación",
+    "city": "Elige una ciudad:",
+    "use-schedule": "Publicar un Tweet sólo para los siguientes momentos",
+    "hour": "Elija un horario (opcional) :",
+    "run": [
+      "Ejecutar",
+      "En curso"
+    ],
+    "menubar": [
+      "Idioma",
+      "Fichero",
+      "Abrir archivo de registro"
+    ],
+    "dialog": [
+      "¡Cuidado!",
+      "Está a punto de detener un proceso en curso.\n¿Realmente quieres irte?",
+      "Esta acción requiere un reinicio de la aplicación.\n¿Quieres reiniciar?"
+    ]
+  },
+  "JA": {
+    "win-title": "Weather Bot - 出版物",
+    "city": "都市を選択します。",
+    "use-schedule": "以下の時間帯のみツイートを公開します。",
+    "hour": "スケジュールを選択する（オプション） :",
+    "run": [
+      "実行",
+      "進行中"
+    ],
+    "menubar": [
+      "言語",
+      "ファイル",
+      "ログファイルを開く"
+    ],
+    "dialog": [
+      "注意!",
+      "現在進行中のプロセスを停止させようとしている。\n本当に帰りたいの？",
+      "この操作には、アプリケーションの再起動が必要です。\n再起動しますか？"
+    ]
+  }
+}
