@@ -93,18 +93,18 @@ def publishTweet(weather_infos):
 
 # https://github.com/Timoleroux/Weather-Bot#mainpymanualrun
 def manualRun(city):
-    all_weather_infos = allWeatherInfos(city)
-    if all_weather_infos != False:
-        publishTweet(all_weather_infos)
-        updateProfilPicture(all_weather_infos[3])
-        return True
+    infos = allWeatherInfos(city)
+    publish = publishTweet(infos)
+    update = updateProfilPicture(infos[3])
+    return bool(publish and update and infos)
 
 # https://github.com/Timoleroux/Weather-Bot#mainpymakeSchedulesValid
 def makeSchedulesValid(schedules):
     valid_schedules = []
-    for i in range(len(schedules)):
+    schedules = [x for x in schedules if x != '']
+    for schedule_ in schedules:
 
-        schedule = schedules[i].replace(' ', '')
+        schedule = schedule_.replace(' ', '')
         if 2 <= len(schedule) <= 5:
             schedule = re.split('[hH:]', schedule)
 
@@ -121,11 +121,12 @@ def makeSchedulesValid(schedules):
 
     return valid_schedules or False
 
+
 # https://github.com/Timoleroux/Weather-Bot#mainpyautorun
 def autoRun(city, schedules):
 
     valid_schedules = makeSchedulesValid(schedules)
-    if valid_schedules != False:
+    if valid_schedules:
         logger.info(f"Lancement du script automatique pour {city}. Horaires : {valid_schedules}")
     else:
         logger.error(f"Aucun horaire n'est valide : {schedules}")
@@ -137,13 +138,12 @@ def autoRun(city, schedules):
         all_weather_infos = allWeatherInfos(city)
 
         if currentTime('%Hh%M') in valid_schedules and all_weather_infos != False:
-            if publishTweet(all_weather_infos) == False:
+            if not publishTweet(all_weather_infos):
                 time.sleep(30)
                 publishTweet(all_weather_infos)
             updateProfilPicture(all_weather_infos[3])
 
         time.sleep(60)
-
 
 if __name__ == '__main__':
     manualRun(input('Entrez une ville'))

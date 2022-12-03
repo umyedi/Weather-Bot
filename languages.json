@@ -6,7 +6,8 @@
     "hour": "Choose a schedule (optional):",
     "run": [
       "Run",
-      "Running"
+      "Running",
+      "Stop"
     ],
     "menubar": [
       "Language",
@@ -15,8 +16,11 @@
     ],
     "dialog": [
       "Warning!",
+      "Info",
       "You are about to stop a process in progress.\nDo you really want to leave?",
-      "This action requires a restart of the application.\nDo you want to restart?"
+      "This action requires a restart of the application.\nDo you want to restart?",
+      "An error occurred.\nCheck the log file for more information.",
+      "Tweet published!"
     ]
   },
   "FR": {
@@ -26,7 +30,8 @@
     "hour": "Choisissez un horaire (optionnel) :",
     "run": [
       "Exécuter",
-      "En cours"
+      "En cours",
+      "Arrêter"
     ],
     "menubar": [
       "Langue",
@@ -35,18 +40,22 @@
     ],
     "dialog": [
       "Attention !",
+      "Info",
       "Vous être sur le point d'arrêter un processus en cours.\nVoulez vous vraiment quitter ?",
-      "Cette action requière un redémarrage de l'application.\nVoulez-vous redémarrer ?"
+      "Cette action requière un redémarrage de l'application.\nVoulez-vous redémarrer ?",
+      "Une erreur s'est produite.\nVérifier le fichier de log pour en savoir plus.",
+      "Tweet publié !"
     ]
   },
   "ES": {
     "win-title": "Weather Bot - Publicación",
     "city": "Elige una ciudad:",
     "use-schedule": "Publicar un Tweet sólo para los siguientes momentos",
-    "hour": "Elija un horario (opcional) :",
+    "hour": "Elija un horario (opcional):",
     "run": [
       "Ejecutar",
-      "En curso"
+      "En curso",
+      "Detener"
     ],
     "menubar": [
       "Idioma",
@@ -55,8 +64,11 @@
     ],
     "dialog": [
       "¡Cuidado!",
+      "Info",
       "Está a punto de detener un proceso en curso.\n¿Realmente quieres irte?",
-      "Esta acción requiere un reinicio de la aplicación.\n¿Quieres reiniciar?"
+      "Esta acción requiere un reinicio de la aplicación.\n¿Quieres reiniciar?",
+      "Se ha producido un error.\nConsulte el archivo de registro para obtener más información.",
+      "Tweet published!"
     ]
   },
   "JA": {
@@ -66,7 +78,8 @@
     "hour": "スケジュールを選択してください（オプション） :",
     "run": [
       "実行",
-      "進行中"
+      "進行中",
+      "Stop"
     ],
     "menubar": [
       "言語",
@@ -75,8 +88,11 @@
     ],
     "dialog": [
       "注意!",
+      "Info",
       "現在進行中のプロセスを停止させようとしています\n本当に戻りますか？",
-      "この操作には、アプリケーションの再起動が必要です\n再起動しますか？"
+      "この操作には、アプリケーションの再起動が必要です\n再起動しますか？",
+      "An error occurred.\nCheck the log file for more information.",
+      "Tweet published!"
     ]
   }
 }

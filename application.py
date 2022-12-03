@@ -1,14 +1,12 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtWidgets import QMessageBox, QToolBar, QMenuBar, QMenu
-from PyQt6.QtCore import QRunnable, QThreadPool
+from PyQt6.QtWidgets import QMessageBox, QMenuBar, QMenu
+from PyQt6.QtCore import QRunnable, QThreadPool, QObject, pyqtSignal, pyqtSlot
 from main import manualRun, autoRun
 from ressources import CUR_DIR
 import json, os, sys, subprocess
 
-"""
- Warning : This application is currently in Alpha version which
-means that code isn't optimized and their might have some bugs.
-"""
+class ResultSignal(QObject):
+    result = pyqtSignal(bool)
 
 class Runnable(QRunnable):
     def __init__(self, n, city, schedules=None):
@@ -16,12 +14,16 @@ class Runnable(QRunnable):
         self.n = n
         self.city = city
         self.schedules = schedules
+        self.signals = ResultSignal()
 
-    def run(self):
+    @pyqtSlot()
+    def run(self): # overwritten function
         if self.n == 1:
-            manualRun(self.city)
+            result = manualRun(self.city)
+            self.signals.result.emit(result)
         elif self.n == 2:
-            autoRun(self.city, self.schedules)
+            result = autoRun(self.city, self.schedules)
+            self.signals.result.emit(result)
 
 class App(QtWidgets.QWidget):
 
@@ -36,8 +38,9 @@ class App(QtWidgets.QWidget):
         return languages[cur_lang]
 
     def setLanguage(self, new_language):
+
         nbr_thread = QThreadPool.globalInstance().activeThreadCount()
-        if  nbr_thread != 0 and self.leavingConfirmation(self.lang()['dialog'][2]) or nbr_thread == 0:
+        if  nbr_thread != 0 and self.displayLeavingConfirmation(self.lang()['dialog'][3]) or nbr_thread == 0:
                 with open(f"{CUR_DIR}\\settings.json", 'r') as s:
                     settings = json.load(s)
                 settings["language"] = str(new_language)
@@ -103,33 +106,32 @@ class App(QtWidgets.QWidget):
 
         self.language_menu = QMenu(self.lang()['menubar'][0])
         ICON_DIR = CUR_DIR + '\\icons\\'
-        self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}uk_flag.png"), "English", lambda: self.setLanguage('EN'))
-        self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}france_flag.png"), "Français", lambda: self.setLanguage('FR'))
-        self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}spain_flag.png"), "Español", lambda: self.setLanguage('ES'))
-        self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}japan_flag.png"), "日本語", lambda: self.setLanguage('JA'))
-
-
-
+        self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}uk_flag.png"),
+                                     "English", lambda: self.setLanguage('EN'))
+        self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}france_flag.png"),
+                                     "Français", lambda: self.setLanguage('FR'))
+        self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}spain_flag.png"),
+                                     "Español", lambda: self.setLanguage('ES'))
+        self.language_menu.addAction(QtGui.QIcon(f"{ICON_DIR}japan_flag.png"),
+                                     "日本語", lambda: self.setLanguage('JA'))
         self.file_menu = QMenu(self.lang()['menubar'][1])
-        self.file_menu.addAction(QtGui.QIcon(f"{ICON_DIR}folder_icon"), self.lang()['menubar'][2], lambda: self.openInExplorer(f"{CUR_DIR}\\main.log"))
+        self.file_menu.addAction(QtGui.QIcon(f"{ICON_DIR}folder_icon"),
+                                 self.lang()['menubar'][2],
+                                 lambda: self.openInExplorer(f"{CUR_DIR}\\main.log"))
 
         self.menu_bar.addMenu(self.file_menu)
         self.menu_bar.addMenu(self.language_menu)
-
         self.main_layout.setMenuBar(self.menu_bar)
 
     def disableAllComponents(self):
-        self.lbl_city.setDisabled(True)
         self.le_city.setDisabled(True)
         self.cbox_use_schedule.setDisabled(True)
-        self.lbl_hour1.setDisabled(True)
         self.le_hour1.setDisabled(True)
-        self.lbl_hour2.setDisabled(True)
         self.le_hour2.setDisabled(True)
-        self.lbl_hour3.setDisabled(True)
         self.le_hour3.setDisabled(True)
         self.btn_run.setDisabled(True)
 
+    @pyqtSlot()
     def run(self):
 
         if self.cbox_use_schedule.isChecked():
@@ -139,7 +141,7 @@ class App(QtWidgets.QWidget):
                         self.le_hour2.text(),
                         self.le_hour3.text()]
 
-            self.btn_run.setText("En cours...")
+            self.btn_run.setText(self.lang()['run'][1])
             self.disableAllComponents()
 
             runnable = Runnable(2, city, schedules)
@@ -148,10 +150,11 @@ class App(QtWidgets.QWidget):
             city = self.le_city.text()
             runnable = Runnable(1, city)
 
+        runnable.signals.result.connect(self.displayStatusMessage)
         pool = QThreadPool.globalInstance()
         pool.start(runnable)
 
-    def leavingConfirmation(self, content):
+    def displayLeavingConfirmation(self, content):
         dlg = QMessageBox(self)
         dlg.setWindowTitle(self.lang()['dialog'][0])
         dlg.setText(content)
@@ -161,9 +164,26 @@ class App(QtWidgets.QWidget):
 
         return button == QMessageBox.StandardButton.Yes
 
-    def closeEvent(self, event):
+    def displayStatusMessage(self, result):
+        dlg = QMessageBox(self)
+        dlg.setStandardButtons(QMessageBox.StandardButton.Ok)
+
+        if result:
+            dlg.setWindowTitle(self.lang()['dialog'][1])
+            dlg.setText(self.lang()['dialog'][5])
+            dlg.setIcon(QMessageBox.Icon.Information)
+
+        else:
+            dlg.setWindowTitle(self.lang()['dialog'][0])
+            dlg.setText(self.lang()['dialog'][4])
+            dlg.setIcon(QMessageBox.Icon.Warning)
+
+        button = dlg.exec()
+        return button == QMessageBox.StandardButton.Yes
+
+    def closeEvent(self, event): # overwritten function
         if QThreadPool.globalInstance().activeThreadCount() >= 1:
-            if self.leavingConfirmation(self.lang()['dialog'][1]):
+            if self.displayLeavingConfirmation(self.lang()['dialog'][2]):
                 event.accept()
                 exit()
             else:
