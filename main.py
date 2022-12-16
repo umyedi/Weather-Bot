@@ -63,6 +63,8 @@ def updateProfilPicture(weather):
         AuthTweepy().update_profile_image(f'{directory}brume.png')
     elif weather == 'orageux':
         AuthTweepy().update_profile_image(f'{directory}orageux.png')
+    elif weather == 'légères chutes de neige':
+        AuthTweepy().update_profile_image(f'{directory}neige.png')
     else:
         print(logging.error(f"Aucune photo de profil correspond à '{weather}' pour le moment."))
         return False
