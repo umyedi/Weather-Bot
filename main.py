@@ -47,26 +47,26 @@ def allWeatherInfos(city):
 
 # https://github.com/Timoleroux/Weather-Bot#mainpyupdateprofilpicture
 def updateProfilPicture(weather):
-    directory = CUR_DIR + '\\profil_pictures\\'
+    DIRECTORY = CUR_DIR + '\\profil_pictures\\'
 
     if weather == 'ciel dégagé':
-        AuthTweepy().update_profile_image(f'{directory}soleil.png')
+        AuthTweepy().update_profile_image(f'{DIRECTORY}soleil.png')
     elif weather in ['couvert', 'peu nuageux', 'partiellement nuageux']:
-        AuthTweepy().update_profile_image(f'{directory}couvert.png')
+        AuthTweepy().update_profile_image(f'{DIRECTORY}couvert.png')
     elif weather == 'nuageux':
-        AuthTweepy().update_profile_image(f'{directory}nuageux.png')
+        AuthTweepy().update_profile_image(f'{DIRECTORY}nuageux.png')
     elif weather == 'pluie modérée':
-        AuthTweepy().update_profile_image(f'{directory}pluie.png')
+        AuthTweepy().update_profile_image(f'{DIRECTORY}pluie.png')
     elif weather == 'légère pluie':
-        AuthTweepy().update_profile_image(f'{directory}legere_pluie.png')
+        AuthTweepy().update_profile_image(f'{DIRECTORY}legere_pluie.png')
     elif weather in ['brume', 'brouillard']:
-        AuthTweepy().update_profile_image(f'{directory}brume.png')
+        AuthTweepy().update_profile_image(f'{DIRECTORY}brume.png')
     elif weather == 'orageux':
-        AuthTweepy().update_profile_image(f'{directory}orageux.png')
+        AuthTweepy().update_profile_image(f'{DIRECTORY}orageux.png')
     elif weather == 'légères chutes de neige':
-        AuthTweepy().update_profile_image(f'{directory}neige.png')
+        AuthTweepy().update_profile_image(f'{DIRECTORY}neige.png')
     else:
-        print(logging.error(f"Aucune photo de profil correspond à '{weather}' pour le moment."))
+        logger.error(f"Aucune photo de profil correspond à '{weather}' pour le moment.")
         return False
 
     return True
