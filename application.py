@@ -2,7 +2,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox, QMenuBar, QMenu
 from PyQt6.QtCore import QRunnable, QThreadPool, QObject, pyqtSignal, pyqtSlot
 from main import manualRun, autoRun
-from ressources import CUR_DIR
+from utils import CUR_DIR
 import json, os, sys, subprocess
 
 class ResultSignal(QObject):
@@ -28,10 +28,10 @@ class Runnable(QRunnable):
 class App(QtWidgets.QWidget):
 
     def lang(self):
-        with open(f"{CUR_DIR}\\settings.json") as s:
+        with open(f"{CUR_DIR}\\data\\settings.json") as s:
             settings = json.load(s)
 
-        with open(f"{CUR_DIR}\\languages.json", encoding='utf-8') as l:
+        with open(f"{CUR_DIR}\\data\\languages.json", encoding='utf-8') as l:
             languages = json.load(l)
 
         cur_lang = settings['language']
@@ -41,11 +41,11 @@ class App(QtWidgets.QWidget):
 
         nbr_thread = QThreadPool.globalInstance().activeThreadCount()
         if  nbr_thread != 0 and self.displayLeavingConfirmation(self.lang()['dialog'][3]) or nbr_thread == 0:
-                with open(f"{CUR_DIR}\\settings.json", 'r') as s:
+                with open(f"{CUR_DIR}\\data\\settings.json", 'r') as s:
                     settings = json.load(s)
                 settings["language"] = str(new_language)
 
-                with open(f"{CUR_DIR}\\settings.json", 'w') as s:
+                with open(f"{CUR_DIR}\\data\\settings.json", 'w') as s:
                     json.dump(settings, s, indent=2)
                 os.execv(sys.executable, [sys.executable] + sys.argv)  # restart the app
 
@@ -117,7 +117,7 @@ class App(QtWidgets.QWidget):
         self.file_menu = QMenu(self.lang()['menubar'][1])
         self.file_menu.addAction(QtGui.QIcon(f"{ICON_DIR}folder_icon"),
                                  self.lang()['menubar'][2],
-                                 lambda: self.openInExplorer(f"{CUR_DIR}\\main.log"))
+                                 lambda: self.openInExplorer(f"{CUR_DIR}\\data\\main.log"))
 
         self.menu_bar.addMenu(self.file_menu)
         self.menu_bar.addMenu(self.language_menu)

@@ -1,21 +1,20 @@
 from pyowm.utils.config import get_default_config
 from pyowm import *
+import os, datetime
 import tweepy
-import os
-from datetime import datetime
 
 CUR_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def currentTime(format):
-   return datetime.now().strftime(format)
+   return datetime.datetime.now().strftime(format)
 
 # Authentification for Tweepy
 def AuthTweepy():
    auth = tweepy.OAuth1UserHandler(
-      "API Key", 
-      "API Key Secret", 
-      "Access Token", 
-      "Access Token Secret"
+      "API_Key", 
+      "API_Key_Secret", 
+      "Access_Token", 
+      "Access_Token_Secret"
    )
    return tweepy.API(auth)
 

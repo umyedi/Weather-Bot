@@ -1,14 +1,11 @@
-from ressources import AuthTweepy, AuthPyown, currentTime, CUR_DIR
-import pyowm
-import tweepy
-import time
-import logging
-import sys
-import re
+from utils import AuthTweepy, AuthPyown, currentTime, CUR_DIR
+import pyowm, tweepy
+import logging, time, sys, re
+
 
 logging.basicConfig(level=logging.INFO,
                     handlers=[
-                        logging.FileHandler(filename='main.log', mode='a', encoding='UTF-8'),
+                        logging.FileHandler(filename=f"{CUR_DIR}\\data\\main.log", mode='a', encoding='UTF-8'),
                         logging.StreamHandler(sys.stdout),
                     ],
                     format='[%(asctime)s] %(levelname)s -> %(message)s',
@@ -125,9 +122,8 @@ def manualRun(city):
     update = updateProfilePicture(infos[3])
     return bool(publish and update and infos)
 
-# https://github.com/Timoleroux/Weather-Bot#mainpymakeSchedulesValid
 def makeSchedulesValid(schedules):
-    """Make a schedule list in the right format to be readable by the autoRun function.
+    """Makes a schedule list in the right format to be readable by the autoRun function.
 
     Args:
         schedules (list): list of schedules
@@ -189,5 +185,5 @@ def autoRun(city, schedules):
         time.sleep(60)
 
 if __name__ == '__main__':
-    manualRun(input('Pick a city'))
+    manualRun(input('Pick a city: '))
     # autoRun(input(input('Pick a city')), ['7h', '12h', '19h30'])
