@@ -4,8 +4,7 @@
 
 
 ## Introduction
-Bonjour ! </br>
-Nous sommes une **équipe de trois lycéens** ayant un **projet d'école** à sujet libre. Nous avons donc choisi de créer un **bot twitter** qui **publie la météo** d'une ville spécifique. Le bot peut également **changer sa photo de profil selon la météo**.
+Ce projet un **bot twitter** qui **publie la météo** d'une ville spécifique. Le bot peut également **changer sa photo de profil selon la météo**.
 
 ⚠️ Le fichier [application.py](https://github.com/Timoleroux/Weather-Bot/blob/main/application.py) est en cours de développement donc il est très probable que le code ne soit pas optimisé et qu'il y ait quelques bugs.
 
