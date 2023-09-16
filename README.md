@@ -1,18 +1,7 @@
 # Weather Bot
 
----
-
-
-## Introduction
-Ce projet un **bot twitter** qui **publie la météo** d'une ville spécifique. Le bot peut également **changer sa photo de profil selon la météo**.
-
-⚠️ Le fichier [application.py](https://github.com/Timoleroux/Weather-Bot/blob/main/application.py) est en cours de développement donc il est très probable que le code ne soit pas optimisé et qu'il y ait quelques bugs.
-
-## C'est quoi le but ?
-
 Weather Bot est un **bot codé entièrement en python** qui permet de **poster des tweets** annonçant la **météo** de n'importe quelle ville. On peut également programmer un **emploi du temps** où chaque jour, un tweet se postera aux heures prédéfinies.
 
----
 
 ## Prérequis pour lancer le script
 
