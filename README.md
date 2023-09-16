@@ -5,13 +5,9 @@
 
 ## Introduction
 Bonjour ! </br>
-Nous sommes une **équipe de trois lycéens** ayant un **projet d'école** à sujet libre.
-Nous avons donc choisi de créer un **bot twitter** qui **publie la météo** d'une ville spécifique.
-Le bot peut également **changer sa photo de profil selon la météo**.
+Nous sommes une **équipe de trois lycéens** ayant un **projet d'école** à sujet libre. Nous avons donc choisi de créer un **bot twitter** qui **publie la météo** d'une ville spécifique. Le bot peut également **changer sa photo de profil selon la météo**.
 
-Attention, le fichier [application.py](https://github.com/Timoleroux/Weather-Bot/blob/main/application.py) est en cours de développement donc il est très probable que le code ne soit pas optimisé et qu'il y ait quelques bugs.
-
-Voici le compte du bot : [@HDedeux](https://twitter.com/HDedeux)
+⚠️ Le fichier [application.py](https://github.com/Timoleroux/Weather-Bot/blob/main/application.py) est en cours de développement donc il est très probable que le code ne soit pas optimisé et qu'il y ait quelques bugs.
 
 ## C'est quoi le but ?
 
@@ -34,7 +30,7 @@ Pour traiter les données météorologiques, c'est le module [**Pyowm**](https:/
 
     pip install pyowm
 
-Il est également nécessaire de posséder le token de Pyowm. Pour cela, il faut se créer un compte sur [OWM](https://home.openweathermap.org/users/sign_up) puis, une fois connecté, se rendre [ici](https://home.openweathermap.org/api_keys) où vous trouverez le token nécessaire que vous pourrez ajouter au fichier [ressources.py](https://github.com/Timoleroux/Weather-Bot/blob/main/ressources.py).
+Il est aussi nécessaire de posséder le token de Pyowm. Pour cela, il faut se créer un compte sur [OWM](https://home.openweathermap.org/users/sign_up) puis, une fois connecté, se rendre [ici](https://home.openweathermap.org/api_keys) où vous trouverez le token nécessaire que vous pourrez ajouter au fichier [ressources.py](https://github.com/Timoleroux/Weather-Bot/blob/main/ressources.py).
 
 **Attention :** nous ne connaissons pas l'emplacement des stations météo grâce auxquelles cette API va chercher les informations. Par conséquent, il est probable qu'il y ait des légères différences avec les données fournies par des sites de météo officiels.
 
@@ -155,7 +151,7 @@ Si vous obtenez l'erreur suivante, c'est que le Tweet que vous essayez de publie
     tweepy.errors.Forbidden: 403 Forbidden
     187 - Status is a duplicate.
 
-La plupart du temps, l'erreur suivante est due au nom de la ville qui n'est pas valide.
+Souvent, l'erreur suivante est due au nom de la ville qui n'est pas valide.
 
     pyowm.commons.exceptions.NotFoundError: Unable to find the resource
 
