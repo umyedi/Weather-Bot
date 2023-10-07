@@ -1,7 +1,7 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox, QMenuBar, QMenu
 from PyQt6.QtCore import QRunnable, QThreadPool, QObject, pyqtSignal, pyqtSlot
-from main import manualRun, autoRun
+from main import Tweet, AutoTweet
 from utils import CUR_DIR
 import json, os, sys, subprocess
 
@@ -19,10 +19,10 @@ class Runnable(QRunnable):
     @pyqtSlot()
     def run(self): # overwritten function
         if self.n == 1:
-            result = manualRun(self.city)
+            result = Tweet(self.city).publishTweet()
             self.signals.result.emit(result)
         elif self.n == 2:
-            result = autoRun(self.city, self.schedules)
+            result = AutoTweet(self.city, self.schedules)
             self.signals.result.emit(result)
 
 class App(QtWidgets.QWidget):
@@ -60,7 +60,7 @@ class App(QtWidgets.QWidget):
         super().__init__()
 
         # --- Windows settings ---
-        self.setWindowIcon(QtGui.QIcon(CUR_DIR + '\\profil_pictures\\couvert.png'))
+        self.setWindowIcon(QtGui.QIcon(CUR_DIR + '\\icons\\icon.ico'))
         self.setWindowTitle(self.lang()['win-title'])
         self.setMinimumSize(QtCore.QSize(330, 280))
         self.setMaximumSize(QtCore.QSize(400, 200))
@@ -91,9 +91,9 @@ class App(QtWidgets.QWidget):
         self.main_layout.addWidget(self.btn_run)
 
         # --- Set components text ---
-        self.le_hour1.setPlaceholderText("07h30")
-        self.le_hour2.setPlaceholderText("12h00")
-        self.le_hour3.setPlaceholderText("19h30")
+        self.le_hour1.setPlaceholderText("07:30")
+        self.le_hour2.setPlaceholderText("12:00")
+        self.le_hour3.setPlaceholderText("19:30")
 
         # --- Set components settings ---
         self.btn_run.setCursor(QtGui.QCursor(QtCore.Qt.CursorShape.PointingHandCursor))
